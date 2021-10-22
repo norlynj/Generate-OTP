@@ -7,10 +7,15 @@ public class Generator {
     Scanner in;
     InputStreamReader isr;
     BufferedReader br;
-
+    String input, output;
+    InToPost inToPost;
+    EvaluatePost eval;
+    LinkedQueue<String> theQueue;
 
     public Generator() {
         in = new Scanner(System.in);
+        eval = new EvaluatePost();
+        theQueue = new LinkedQueue<>();
     }
 
     public void showMenu() {
@@ -44,36 +49,29 @@ public class Generator {
         }
     }
 
-    String input, output;
-    InToPost inToPost;
-    EvaluatePost eval = new EvaluatePost();
-    Queue theQueue = new Queue();
-
-    int expNum;
-
     public void generate(){
-        int size = theQueue.getSize();
-        int output;
-        while(size>0){
-            output = new EvaluatePost().doParse((String) theQueue.dequeue());
-            size--;
-            theQueue.enqueue(output);
+        String output;
+        System.out.println(theQueue.size());
+        while(!theQueue.isEmpty()){
+            output = eval.doParse(theQueue.dequeue());
+            System.out.println(output);
 
         }
     }
 
     public void add(){
-
-
         System.out.println("How many expressions? ");
-        expNum = in.nextInt();
+        int expNum = in.nextInt();
+        String postFix;
 
 
         for(int i = 0; i < expNum; i++){
             System.out.print("Enter infix: ");
             System.out.flush();
             input = new InToPost(getString()).doTrans();
+            System.out.println(input);
             theQueue.enqueue(input);
+            System.out.println(theQueue.size());
         }
         in.nextLine();
     }
@@ -91,8 +89,9 @@ public class Generator {
     }
 
     public void display(){
-        while(!theQueue.isEmpty()){
-            System.out.println(theQueue.dequeue());
+        LinkedQueue<String> theSecondQueue = theQueue;
+        while(!theSecondQueue.isEmpty()){
+            System.out.println(theSecondQueue.dequeue());
         }
 
     }

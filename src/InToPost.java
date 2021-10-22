@@ -4,8 +4,7 @@ import java.io.InputStreamReader;
 
 public class InToPost {
 
-    private Stack theStack;
-    private Queue theQueue;
+    private LinkedStack<Character> theStack;
     private String input;
     private String output = "";
     //--------------------------------------------------------------
@@ -13,8 +12,7 @@ public class InToPost {
     {
         input = in;
         int stackSize = input.length();
-        theStack = new Stack(stackSize);
-        theQueue = new Queue();
+        theStack = new LinkedStack<>();
     }
 //-------------------------------------------------------------
 
@@ -49,7 +47,6 @@ public class InToPost {
         {
             theStack.displayStack("While "); // *diagnostic*
             output += theStack.pop(); // write to output
-            theQueue.enqueue(output);
         }
         theStack.displayStack("End "); // *diagnostic*
         return output; // return postfix
@@ -78,10 +75,10 @@ public class InToPost {
                 }
                 else // prec of new not less
                     output = output + opTop; // than prec of old
-                } // end else (it's an operator)
-            } // end while
-            theStack.push(opThis); // push new operator
-        } // end gotOp()
+            } // end else (it's an operator)
+        } // end while
+        theStack.push(opThis); // push new operator
+    } // end gotOp()
 
     //--------------------------------------------------------------
     public void gotParen(char ch)
@@ -90,9 +87,9 @@ public class InToPost {
         {
             char chx = theStack.pop();
             if( chx == '(' ) // if popped '('
-            break; // we're done
+                break; // we're done
             else // if popped operator
-            output = output + chx; // output it
+                output = output + chx; // output it
         } // end while
     } // end popOps()
 

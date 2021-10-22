@@ -1,5 +1,4 @@
-
-public class Queue<E>{
+public class SinglyLinkedList<E>{
     public static class Node<E>{
         private E element;
         private Node<E> next;
@@ -30,7 +29,13 @@ public class Queue<E>{
     public int getSize() { return size; };
 
     //update methods
-    public void enqueue(E e){
+    public void addFirst(E e){
+        head = new Node<>(e, head);
+        tail = size == 0 ? head : null;
+        size++;
+    }
+
+    public void addLast(E e){
         Node<E> newNode = new Node<>(e, null);
         if(isEmpty()){
             head = newNode;
@@ -41,7 +46,7 @@ public class Queue<E>{
         size++;
     }
 
-    public E dequeue(){
+    public E removeFirst(){
         if(isEmpty()){ return null; }
         Node<E> e = (Node<E>) head;
         head = head.getNext();
@@ -50,5 +55,25 @@ public class Queue<E>{
         return e.getElement();
     }
 
+    public E removeLast(){
+        if(isEmpty()){ return null; }
 
+        if(size == 1){ return removeFirst(); }
+
+        Node<E> prev = null;
+        Node<E> e = (Node<E>) head.getElement();
+
+        while(e.getNext() != null){
+            prev = e;
+            e = e.getNext();
+        }
+
+        prev.setNext(null);
+        size--;
+        return e.getElement();
+    }
+
+    public Node<E> getHead(){
+        return head;
+    }
 }
