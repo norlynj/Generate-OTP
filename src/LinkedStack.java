@@ -1,6 +1,5 @@
 
 public class LinkedStack<E>{
-
     private SinglyLinkedList<E> list = new SinglyLinkedList();
 
     public LinkedStack() {}
@@ -15,18 +14,5 @@ public class LinkedStack<E>{
 
     public E pop() { return list.removeFirst(); }
 
-    public void displayStack(String s)
-    {
-        System.out.print(s);
-        System.out.print("Stack (bottom-->top): ");
-        int i = size();
-        while(i>0)
-        {
-            System.out.print( top() );
-            System.out.print(' ');
-            i--;
-        }
-        System.out.println("");
-    }
 
 }

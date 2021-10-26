@@ -76,4 +76,21 @@ public class SinglyLinkedList<E>{
     public Node<E> getHead(){
         return head;
     }
+
+    public void display() {
+        //Node e will point to head
+        Node<E> e = (Node<E>) head;
+
+        if(head == null) {
+            System.out.println("List is empty");
+            return;
+        }
+        System.out.println("OTP Queue: ");
+        while(e != null) {
+            //Prints each node by incrementing pointer
+            System.out.println(e.element + " ");
+            e = e.next;
+        }
+        System.out.println();
+    }
 }

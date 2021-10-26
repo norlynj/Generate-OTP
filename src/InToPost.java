@@ -4,99 +4,75 @@ import java.io.InputStreamReader;
 
 public class InToPost {
 
-    private LinkedStack<Character> theStack;
-    private String input;
-    private String output = "";
-    //--------------------------------------------------------------
-    public InToPost(String in) // constructor
-    {
-        input = in;
-        int stackSize = input.length();
-        theStack = new LinkedStack<>();
-    }
-//-------------------------------------------------------------
+    //utility function to return precedence of a give operator
+    private int prec(char ch){
+        switch (ch)
+        {
+            case '+':
+            case '-':
+                return 1;
 
-    public String doTrans() // do translation to postfix
-    {
-        for(int j=0; j<input.length(); j++)
-        {
-            char ch = input.charAt(j);
-            theStack.displayStack("For "+ch+" "); // *diagnostic*
-            switch(ch)
-            {
-                case '+': // it's + or -
-                case '-':
-                    gotOper(ch, 1); // go pop operators
-                    break; // (precedence 1)
-                case '*': // it's * or /
-                case '/':
-                    gotOper(ch, 2); // go pop operators
-                    break; // (precedence 2)
-                case '(': // it's a left paren
-                    theStack.push(ch); // push it
-                    break;
-                case ')': // it's a right paren
-                    gotParen(ch); // go pop operators
-                    break;
-                default: // must be an operand
-                    output = output + ch; // write it to output
-                    break;
-            } // end switch
-        } // end for
-        while( !theStack.isEmpty() ) // pop remaining opers
-        {
-            theStack.displayStack("While "); // *diagnostic*
-            output += theStack.pop(); // write to output
+            case '*':
+            case '/':
+                return 2;
+
+            case '^':
+                return 3;
         }
-        theStack.displayStack("End "); // *diagnostic*
-        return output; // return postfix
-    } // end doTrans()
+        return -1;
+    }
 
-    //--------------------------------------------------------------
-    public void gotOper(char opThis, int prec1) { // got operator from input
-        while (!theStack.isEmpty()) {
-            char opTop = theStack.pop();
-            if (opTop == '(') // if it's a '('
-            {
-                theStack.push(opTop); // restore '('
-                break;
-            } else // it's an operator
-            {
-                int prec2; // precedence of new op
-                if (opTop == '+' || opTop == '-') // find new op prec
-                    prec2 = 1;
-                else
-                    prec2 = 2;
+    //converts infix to postfix
+    public String doTrans(String in){
 
-                if (prec2 < prec1) { // if prec of new op less
-                    // than prec of old
-                    theStack.push(opTop); // save newly-popped op
-                    break;
-                }
-                else // prec of new not less
-                    output = output + opTop; // than prec of old
-            } // end else (it's an operator)
-        } // end while
-        theStack.push(opThis); // push new operator
-    } // end gotOp()
+        LinkedStack<Character> stack = new LinkedStack<>();
+        String output = new String("");
 
-    //--------------------------------------------------------------
-    public void gotParen(char ch)
-    { // got right paren from input
-        while( !theStack.isEmpty() )
+        for (int i = 0; i< in.length(); ++i)
         {
-            char chx = theStack.pop();
-            if( chx == '(' ) // if popped '('
-                break; // we're done
-            else // if popped operator
-                output = output + chx; // output it
-        } // end while
-    } // end popOps()
+            char c = in.charAt(i);
 
+            // If the scanned character is an
+            // operand, add it to output.
+            if (Character.isLetterOrDigit(c))
+                output += c;
 
-//--------------------------------------------------------------
-} // end class InToPost
-////////////////////////////////////////////////////////////////
+                // If the scanned character is an '(',
+                // push it to the stack.
+            else if (c == '(')
+                stack.push(c);
+
+                //  If the scanned character is an ')',
+                // pop and output from the stack
+                // until an '(' is encountered.
+            else if (c == ')')
+            {
+                while (!stack.isEmpty() && stack.top() != '(')
+                    output += stack.pop();
+
+                stack.pop();
+            }
+            else // an operator is encountered
+            {
+                while (!stack.isEmpty() && prec(c) <= prec(stack.top())){
+
+                    output += stack.pop();
+                }
+                stack.push(c);
+            }
+
+        }
+
+        // pop all the operators from the stack
+        while (!stack.isEmpty()){
+            if(stack.top() == '(')
+                return "Invalid expression";
+            output += stack.pop();
+        }
+        return output;
+    }
+
+}
 
 
 

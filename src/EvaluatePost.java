@@ -1,51 +1,47 @@
 public class EvaluatePost {
 
-    private LinkedStack<Integer> theStack;
-    //--------------------------------------------------------------
-    //--------------------------------------------------------------
-    public String doParse(String input) {
-        theStack = new LinkedStack<>(); // make new stack
-        char ch;
-        int j;
-        int num1, num2, interAns;
 
-        for (j = 0; j < input.length(); j++) {// for each char,
-            ch = input.charAt(j); // read from input
-            theStack.displayStack(" "+ch+" "); // *diagnostic*
-            if (ch >= '0' && ch <= '9'){// if it's a number
-                theStack.push((ch -'0')); // push it
-            }
-            else // it's an operator
-            {
-                num2 = theStack.pop(); // pop operands
-                num1 = theStack.pop();
-                switch (ch) // do arithmetic
-                {
+    public String evaluate(String postfix) {
+        //create a stack
+        LinkedStack<Integer> stack = new LinkedStack<>();
+
+
+        // Scan all characters one by one
+        for (int i = 0; i < postfix.length(); i++) {
+            char c = postfix.charAt(i);
+
+            // If the scanned character is an operand (number here),
+            // push it to the stack.
+            if (Character.isDigit(c))
+                stack.push(c - '0');
+
+                //  If the scanned character is an operator, pop two
+                // elements from stack apply the operator
+            else {
+                int val1 = stack.pop();
+                int val2 = stack.pop();
+
+                switch (c) {
                     case '+':
-                        interAns = num1 + num2;
+                        stack.push(val2 + val1);
                         break;
+
                     case '-':
-                        interAns = num1 - num2;
+                        stack.push(val2 - val1);
                         break;
-                    case '*':
-                        interAns = num1 * num2;
-                        break;
+
                     case '/':
-                        interAns = num1 / num2;
+                        stack.push(val2 / val1);
                         break;
-                    default:
-                        interAns = 0;
-                } // end switch
-                theStack.push(interAns); // push result
-            } // end else
-        } // end for
-        interAns = (int) theStack.pop(); // get answer
-        return String.valueOf(interAns);
-    } // end doParse()
 
+                    case '*':
+                        stack.push(val2 * val1);
+                        break;
+                }
+            }
+        }
+        return String.valueOf(stack.pop());
 
-
-
-
-} // end class ParsePos
+    }
+}
 
