@@ -1,5 +1,5 @@
 public class SinglyLinkedList<E>{
-    public static class Node<E>{
+    private static class Node<E>{
         private E element;
         private Node<E> next;
 
@@ -8,11 +8,11 @@ public class SinglyLinkedList<E>{
             next = n;
         }
 
-        public E getElement() { return element; }
+        private E getElement() { return element; }
 
-        public Node<E> getNext() { return next; }
+        private Node<E> getNext() { return next; }
 
-        public void setNext(Node<E> n) { next = n; }
+        private void setNext(Node<E> n) { next = n; }
     }
 
     private Node<E> head = null;
@@ -23,8 +23,6 @@ public class SinglyLinkedList<E>{
     public boolean isEmpty() { return size == 0; }
 
     public E first() { return isEmpty() ? null : head.getElement(); }
-
-    public E last() { return isEmpty() ? null : tail.getElement(); }
 
     public int getSize() { return size; };
 
@@ -55,27 +53,7 @@ public class SinglyLinkedList<E>{
         return e.getElement();
     }
 
-    public E removeLast(){
-        if(isEmpty()){ return null; }
 
-        if(size == 1){ return removeFirst(); }
-
-        Node<E> prev = null;
-        Node<E> e = (Node<E>) head.getElement();
-
-        while(e.getNext() != null){
-            prev = e;
-            e = e.getNext();
-        }
-
-        prev.setNext(null);
-        size--;
-        return e.getElement();
-    }
-
-    public Node<E> getHead(){
-        return head;
-    }
 
     public void display() {
         //Node e will point to head

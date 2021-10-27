@@ -22,8 +22,8 @@ public class Generator {
     public void showMenu() {
         String choice = "";
 
-        while (!choice.equals("Q")) {
-            System.out.println("Welcome to OTP Generator!");
+        while (true) {
+            System.out.println("\nWelcome to OTP Generator!");
             System.out.println("To continue, please select an option below:");
             System.out.println("\ta. generate OTP");
             System.out.println("\tb. add expressions to OTP Queue");
@@ -67,8 +67,14 @@ public class Generator {
      **/
     public void add(){
         String input;
+        int expNum;
         System.out.println("How many expressions? ");
-        int expNum = in.nextInt();
+
+        while(!in.hasNextInt()) {
+            System.out.println("Enter a valid number.");
+            in.next();
+        }
+        expNum = in.nextInt();
 
         for(int i = 0; i < expNum; i++){
             System.out.print("Enter infix: ");
@@ -76,10 +82,9 @@ public class Generator {
 
             input = inToPost.doTrans(getString());
             queue.enqueue(input);
-
-            System.out.println(input);
         }
         in.nextLine();
+
     }
 
 
@@ -91,11 +96,7 @@ public class Generator {
      **/
     public void generate(){
         String output;
-
-        if(queue.isEmpty()) {
-            System.out.println("Nothing to dequeue.\n");
-            return;
-        }
+        System.out.println("Generating OTP...");
 
         while(!queue.isEmpty()){
             output = eval.evaluate(queue.dequeue());
@@ -103,9 +104,8 @@ public class Generator {
         }
 
         //if there's nothing left to dequeue prompt the user to input infix again
-        if(queue.isEmpty()){
-            System.out.println("Queue is now empty. Add expression again.\n");
-        }
+        System.out.println("Queue is empty. Add expression.");
+
     }
 
 
@@ -118,7 +118,6 @@ public class Generator {
      **/
     public String fourDigitOTP(String otp){
         int len = otp.length();
-        System.out.println(len);
 
         if(len == 4)
             return otp;
@@ -144,7 +143,7 @@ public class Generator {
      **/
     public void display(){
         if(queue.isEmpty()) {
-            System.out.println("OTP Queue empty.\n");
+            System.out.println("OTP Queue empty.");
             return;
         }
         queue.display();

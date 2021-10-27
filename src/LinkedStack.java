@@ -2,8 +2,6 @@
 public class LinkedStack<E>{
     private SinglyLinkedList<E> list = new SinglyLinkedList();
 
-    public LinkedStack() {}
-
     public int size() { return list.getSize(); }
 
     public boolean isEmpty() { return list.isEmpty(); }
