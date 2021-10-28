@@ -1,5 +1,5 @@
-
 public class LinkedStack<E>{
+
     private SinglyLinkedList<E> list = new SinglyLinkedList();
 
     public int size() { return list.getSize(); }
@@ -14,3 +14,4 @@ public class LinkedStack<E>{
 
 
 }
+

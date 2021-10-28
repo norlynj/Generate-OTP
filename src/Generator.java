@@ -121,7 +121,6 @@ public class Generator {
 
         if(len == 4)
             return otp;
-
         else if(len < 4){
             if(len == 1)
                 return "000" + otp;
@@ -130,7 +129,6 @@ public class Generator {
             else
                 return "0" + otp;
         }
-
         else
             return otp.substring(len - 4);
     }

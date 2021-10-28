@@ -1,6 +1,5 @@
 public class EvaluatePost {
 
-
     public String evaluate(String postfix) {
         //create a stack
         LinkedStack<Integer> stack = new LinkedStack<>();
@@ -45,4 +44,5 @@ public class EvaluatePost {
 
     }
 }
+
 

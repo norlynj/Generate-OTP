@@ -1,7 +1,4 @@
-import java.util.Queue;
-
 public class LinkedQueue<E>{
-    // empty list. This class is already defined in the week 2 module.
     private SinglyLinkedList<E> list = new SinglyLinkedList();
 
 
@@ -19,3 +16,4 @@ public class LinkedQueue<E>{
         list.display();
     }
 }
+

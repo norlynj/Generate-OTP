@@ -53,8 +53,6 @@ public class SinglyLinkedList<E>{
         return e.getElement();
     }
 
-
-
     public void display() {
         //Node e will point to head
         Node<E> e = (Node<E>) head;
